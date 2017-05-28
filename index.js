@@ -43,7 +43,7 @@ https.createServer(config.https, (req, res) => {
 debug('Listening on port: ' + config.https.port);
 
 function postHandler (req, res) {
-    var statusCode = 201;
+    var statusCode = 200;
     var vrliAlert = req.body;
 
     console.log('New vROps alert: ' + vrliAlert.alertId + ' (' + vrliAlert.alertName + ')');
@@ -51,25 +51,6 @@ function postHandler (req, res) {
     opsgenie.createAlert(vrliAlert, (err, opsgenieAlert) => {
         if (err) { return sendResponse(res, err.httpStatusCode || 500, err.error || err); }
         console.log('OpsGenie alert ' + opsgenieAlert.alertId + ' created for vROps alert ' + vrliAlert.alertId);
-        return sendResponse(res, statusCode, opsgenieAlert);
-    });
-}
-
-function putHandler (req, res) {
-    var statusCode = 202;
-    var vrliAlert = req.body;
-
-    if (!req.body.cancelDate) {
-        var error = 'Alert updates are not completely supported. All alert updates except cancel operations are ignored.';
-        debug('TODO: ' + error);
-        return sendResponse(res, 501, new Error(error));
-    }
-
-    console.log('Canceled vROps alert: ' + vrliAlert.alertId + ' (' + vrliAlert.alertName + ')');
-
-    opsgenie.cancelAlert(vrliAlert, (err, opsgenieAlert) => {
-        if (err) { return sendResponse(res, err.httpStatusCode || 500, err.error || err); }
-        console.log('OpsGenie alert ' + opsgenieAlert.id + ' canceled for vROps alert ' + vrliAlert.alertId);
         return sendResponse(res, statusCode, opsgenieAlert);
     });
 }
@@ -84,14 +65,4 @@ function sendResponse (res, statusCode, response) {
     debug(statusCode >= 300 ? 'Error:' : 'Response:', statusCode, response);
     res.writeHead(statusCode);
     res.end(response);
-}
-
-function findHttpOrigin (req, config) {
-    var origin = req.socket.remoteAddress.match(/(?:[0-9]{1,3}\.){3}[0-9]{1,3}/);
-    if (origin) {
-        return origin[0];
-    } else if (req.socket.remoteAddress === '::1') {
-        return '127.0.0.1';
-    }
-    return undefined;
 }
