@@ -46,11 +46,11 @@ function postHandler (req, res) {
     var statusCode = 200;
     var vrliAlert = req.body;
 
-    console.log('New vROps alert: ' + vrliAlert.alertId + ' (' + vrliAlert.alertName + ')');
+    console.log('New vRLI alert: ' + vrliAlert.alertId + ' (' + vrliAlert.alertName + ')');
 
     opsgenie.createAlert(vrliAlert, (err, opsgenieAlert) => {
         if (err) { return sendResponse(res, err.httpStatusCode || 500, err.error || err); }
-        console.log('OpsGenie alert ' + opsgenieAlert.alertId + ' created for vROps alert ' + vrliAlert.alertId);
+        console.log('OpsGenie alert ' + opsgenieAlert.alertId + ' created for vRLI alert ' + vrliAlert.alertId);
         return sendResponse(res, statusCode, opsgenieAlert);
     });
 }
