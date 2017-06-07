@@ -1,6 +1,6 @@
 # vRealize Log Insight (vRLI) Shim for OpsGenie
 
-A vRLI shim build with a NodeJs HTTPS server.
+A simple NodeJS shim transforming vRLI alerts into OpsGenie alerts. The shim is implemented using the NodeJS HTTPS server.
 
 ## Running
 

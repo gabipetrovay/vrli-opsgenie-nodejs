@@ -1,22 +1,22 @@
 {
-  "name": "hsm-vrops-shim-nodejs",
-  "version": "0.0.1",
-  "description": "Testing a simple vROps shim with a basic NodeJs HTTPS server",
+  "name": "vrli-opsgenie-nodejs",
+  "version": "0.5.0",
+  "description": "A simple NodeJS shim transforming vRLI alerts into OpsGenie alerts.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabipetrovay/hsm-vrops-shim-nodejs.git"
+    "url": "git+https://github.com/gabipetrovay/vrli-opsgenie-nodejs.git"
   },
   "author": "Gabriel Petrovay",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gabipetrovay/hsm-vrops-shim-nodejs/issues"
+    "url": "https://github.com/gabipetrovay/vrli-opsgenie-nodejs/issues"
   },
   "dependencies": {
-    "opsgenie-sdk": "*",
-    "debug": "*"
+    "opsgenie-sdk": "0.3.5",
+    "debug": "2.6.3"
   }
 }
