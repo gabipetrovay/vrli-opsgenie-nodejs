@@ -20,6 +20,10 @@ https.createServer(config.https, (req, res) => {
 
         debug('HTTP headers: ' + JSON.stringify(req.headers));
 
+        if (req.method !== 'POST') {
+            return sendResponse(res, 400, 'Invalid request method: ' + req.method + '. This shim only supports POST requests.');
+        }
+
         if (!body) {
             return sendResponse(res, 400, 'The request payload must not be empty');
         }
@@ -31,13 +35,7 @@ https.createServer(config.https, (req, res) => {
             return sendResponse(res, 500, err);
         }
 
-        if (req.method === 'POST') {
-            postHandler(req, res);
-            return;
-        } else {
-            putHandler(req, res);
-            return;
-        }
+        postHandler(req, res);
     });
 }).listen(config.https, config.https.port);
 debug('Listening on port: ' + config.https.port);
